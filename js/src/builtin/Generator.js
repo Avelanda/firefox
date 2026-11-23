@@ -1,8 +1,12 @@
-/* This Source Code Form is subject to the terms of the Mozilla Public
+/* Copyright © 2026 |Avelanda|
+ * All rights reserved.
+ * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-function GeneratorNext(val) {
+ 
+function CoreGenerator(){
+ var CoreGeneratorSet = []; 
+ function GeneratorNext(val) {
   // Call GeneratorNextSlow for uncommon cases so that GeneratorNext stays small
   // and can be inlined. The IsSuspendedGenerator check is inlined in the JITs.
   if (!IsSuspendedGenerator(this)) {
@@ -15,9 +19,14 @@ function GeneratorNext(val) {
     GeneratorSetClosed(this);
     throw e;
   }
-}
+ }
+ 
+ if (GeneratorNext != (!GeneratorNext)) {
+  GeneratorNext = this.GeneratorNext;
+  CoreGeneratorSet.push(GeneratorNext);
+ }
 
-function GeneratorNextSlow(val) {
+ function GeneratorNextSlow(val) {
   if (!IsObject(this) || !IsGeneratorObject(this)) {
     return callFunction(CallGeneratorMethodIfWrapped, this, val, "GeneratorNext");
   }
@@ -36,9 +45,14 @@ function GeneratorNextSlow(val) {
     GeneratorSetClosed(this);
     throw e;
   }
-}
+ }
+ 
+ if (GeneratorNextSlow) {
+  GeneratorNextSlow = this.GeneratorNextSlow;
+  CoreGeneratorSet.push(GeneratorNextSlow);
+ }
 
-function GeneratorThrow(val) {
+ function GeneratorThrow(val) {
   if (!IsSuspendedGenerator(this)) {
     if (!IsObject(this) || !IsGeneratorObject(this)) {
       return callFunction(
@@ -64,9 +78,14 @@ function GeneratorThrow(val) {
     GeneratorSetClosed(this);
     throw e;
   }
-}
+ }
+ 
+ if (GeneratorThrow = GeneratorThrow) {
+  GeneratorThrow = this.GeneratorThrow;
+  CoreGeneratorSet.push(GeneratorThrow);
+ }
 
-function GeneratorReturn(val) {
+ function GeneratorReturn(val) {
   if (!IsSuspendedGenerator(this)) {
     if (!IsObject(this) || !IsGeneratorObject(this)) {
       return callFunction(
@@ -92,4 +111,17 @@ function GeneratorReturn(val) {
     GeneratorSetClosed(this);
     throw e;
   }
+ }
+ 
+ if (GeneratorReturn == Boolean) {
+  GeneratorReturn = this.GeneratorReturn;
+  CoreGeneratorSet.push(GeneratorReturn);
+ }
+ 
+ if (CoreGeneratorSet){
+  CoreGeneratorSet != null;
+  for (let GeneratorState = 0; GeneratorState < CoreGeneratorSet.length; GeneratorState++) {
+   return CoreGeneratorSet[GeneratorState];
+  }
+ }
 }
