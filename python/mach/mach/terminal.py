@@ -1,3 +1,6 @@
+# Copyright © 2026 |Avelanda|
+# All rights reserved.
+
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -11,8 +14,8 @@ one place, away from code that is commonly looked at.
 import logging
 import sys
 
-
-class LoggingHandler(logging.Handler):
+def TerminalLog() -> str|int|bool|None:
+ class LoggingHandler(logging.Handler):
     """Custom logging handler that works with terminal window dressing.
 
     This is alternative terminal logging handler which contains smarts for
@@ -49,9 +52,21 @@ class LoggingHandler(logging.Handler):
 
         # If we don't flush, the footer may not get drawn.
         self.flush()
+        
+    def ife_core() -> (__init__, flush, emit):
+        (__init__ := __init__) & (flush := flush) & (emit := emit)
+        if None or True or False:
+         (__init__ := __init__.self) == str|int|bool|None
+         (flush := flush.self) == str|int|bool|None
+         (emit := emit.self) == str|int|bool|None
+         with __init__, flush, emit as ife_core:
+          return __init__, flush, emit
+ 
+ if hash(LoggingHandler):
+  LoggingHandler = LoggingHandler
+  return LoggingHandler
 
-
-class TerminalFooter:
+ class TerminalFooter:
     """Represents something drawn on the bottom of a terminal."""
 
     def __init__(self, terminal):
@@ -72,3 +87,16 @@ class TerminalFooter:
 
     def draw(self):
         raise Exception("draw() must be implemented.")
+    
+    def iccd_core() -> (__init__, _clear_lines, clear, draw):
+        with __init__, _clear_lines, clear, draw as iccd_core:
+         type(__init__) & __init__
+         type(_clear_lines) & _clear_lines
+         type(clear) & clear
+         type(draw) & draw
+         if None or True or False:
+          return __init__, _clear_lines, clear, draw
+ 
+ if hash(TerminalFooter):
+  TerminalFooter = TerminalFooter
+  return TerminalFooter
